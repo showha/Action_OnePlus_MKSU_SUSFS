@@ -226,10 +226,19 @@ jobs:
          name: Image_KernelSU_${{ env.KSUVER }}_${{ github.event.inputs.FEIL }}
          path: kernel_workspace/kernel
 
-      - name: create github release
-        id: new_release
-        uses: softprops/action-gh-release@v2.0.8
+      # - name: create github release
+      #   id: new_release
+      #   uses: softprops/action-gh-release@v2.0.8
+      #   with:
+      #     name:  'Android14_v${{ env.BUILD_TIME }}'
+      #     make_latest: true
+      #     files: ./AnyKernel3/*
+
+      - name: release
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          name:  'Android14_v${{ env.BUILD_TIME }}'
-          make_latest: true
+          automatic_release_tag: 'Android14_v${{ env.BUILD_TIME }}'
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          title: 'Android14_v${{ env.BUILD_TIME }}'
           files: ./AnyKernel3/*
