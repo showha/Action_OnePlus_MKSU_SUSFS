@@ -5,11 +5,11 @@ on:
       CPU:
         description: "分支"
         required: true
-        default: 'sm8650'
+        default: 'sm8550'
       FEIL:
         description: "配置文件"
         required: true
-        default: 'oneplus_ace3_pro_v'
+        default: 'oneplus_11_v'
       CPUD:
         description: "处理器代号"
         required: true
@@ -21,11 +21,11 @@ on:
       KERNEL_VERSION:
         description: "内核版本"
         required: true
-        default: '6.1'
+        default: '5.15'
       KERNEL_NAME:
         description: "修改内核名称"
         required: true
-        default: '-android14-11-o-g1132d864665d'
+        default: '-android13-8-o-g1132d864665d'
       kernelsu_variant:
         description: "选择 KSU"
         required: true
@@ -73,8 +73,9 @@ jobs:
 
       - name: Configure Git
         run: |
-         git config --global user.name "ychenxuan"
-         git config --global user.email "3494167979@qq.com"
+         git config --global user.name "showha"
+         git config --global user.email "ritianzhang@qq.com"
+         echo "BUILD_TIME=$(TZ=Asia/Shanghai date "+%Y%m%d%H%M")" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: |
@@ -222,3 +223,11 @@ jobs:
         with:
          name: Image_KernelSU_${{ env.KSUVER }}_${{ github.event.inputs.FEIL }}
          path: kernel_workspace/kernel
+
+      - name: create github release
+        id: new_release
+        uses: softprops/action-gh-release@v2.0.8
+        with:
+          name:  'Android14_v${{ env.BUILD_TIME }}'
+          make_latest: true
+          files: ./AnyKernel3/*
