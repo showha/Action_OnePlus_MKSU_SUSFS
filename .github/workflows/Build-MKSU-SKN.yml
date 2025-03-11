@@ -1,5 +1,7 @@
 name: Build OnePlus_Kernel
 on:
+  schedule:
+    - cron: '0 8 * * sun'
   workflow_dispatch:
     inputs:
       CPU:
@@ -13,7 +15,7 @@ on:
       CPUD:
         description: "处理器代号"
         required: true
-        default: 'pineapple'
+        default: 'kalama'
       ANDROID_VERSION:
         description: "内核安卓版本"
         required: true
