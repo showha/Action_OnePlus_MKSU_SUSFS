@@ -82,7 +82,7 @@ jobs:
       - name: Install dependencies
         run: |
          sudo apt update && sudo apt upgrade -y
-         sudo apt install -y python3 git curl
+         sudo apt install -y python3 git curl zip
 
       - name: Install repo tool
         run: |
@@ -212,12 +212,13 @@ jobs:
          rm -rf ./AnyKernel3/.git
          cp kernel_workspace/kernel_platform/out/msm-kernel-${{ github.event.inputs.CPUD }}-gki/dist/Image ./AnyKernel3/
          cp kernel_workspace/kernel_platform/out/msm-kernel-${{ github.event.inputs.CPUD }}-gki/dist/Image ./kernel_workspace/kernel
+         zip -r AnyKernel3_KernelSU_${{ env.KSUVER }}_${{ github.event.inputs.FEIL }}.zip ./AnyKernel3
          
-      - name: Upload AnyKernel3
-        uses: actions/upload-artifact@v4
-        with:
-         name: AnyKernel3_KernelSU_${{ env.KSUVER }}_${{ github.event.inputs.FEIL }}
-         path: ./AnyKernel3/*
+      # - name: Upload AnyKernel3
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #    name: AnyKernel3_KernelSU_${{ env.KSUVER }}_${{ github.event.inputs.FEIL }}
+      #    path: ./AnyKernel3/*
 
       - name: Upload Image
         uses: actions/upload-artifact@v4
@@ -240,4 +241,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           title: 'Android14_v${{ env.BUILD_TIME }}'
-          files: ./AnyKernel3/*
+          files: ./AnyKernel3_KernelSU_${{ env.KSUVER }}_${{ github.event.inputs.FEIL }}.zip
