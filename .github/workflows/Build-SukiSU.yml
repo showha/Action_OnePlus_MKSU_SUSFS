@@ -1,7 +1,5 @@
 name: Build OnePlus_Kernel
 on:
-  # schedule:
-  #   - cron: '0 8 * * sun'
   workflow_dispatch:
     inputs:
       CPU:
