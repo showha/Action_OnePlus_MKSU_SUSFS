@@ -50,6 +50,11 @@ on:
         required: true
         type: boolean
         default: true
+      KPM_ENABLED:
+        description: "启用 KPM 特性"
+        required: true
+        type: boolean
+        default: true
       VFS_patch_ENABLED:
         description: "添加vfs补丁（新钩子）？"
         required: true
@@ -202,6 +207,13 @@ jobs:
 
           # Remove check_defconfig
           sed -i 's/check_defconfig//' ./common/build.config.gki
+
+      - name: Add KPM
+        if: ${{ github.event.inputs.KPM_ENABLED == 'true' }}
+        run: |
+          echo "正在添加KPM标志。。。。。。。。。"
+          echo "CONFIG_KPM=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "添加完成！"
 
       - name: Add make name
         run: |
